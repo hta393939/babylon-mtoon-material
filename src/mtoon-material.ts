@@ -46,6 +46,7 @@ import BumpFragment from './shaders/bump-fragment.frag';
 import LightFragment from './shaders/light-fragment.frag';
 import VertexShader from './shaders/mtoon.vert';
 import FragmentShader from './shaders/mtoon.frag';
+import { bindClipPlane } from '@babylonjs/core';
 
 /**
  * Debug shading mode
@@ -989,8 +990,10 @@ export class MToonMaterial extends PushMaterial {
             this.buildUniformLayout();
         }
 
+        const drawWrapper = subMesh._drawWrapper;
+
         if (subMesh.effect && this.isFrozen) {
-            if (subMesh.effect._wasPreviouslyReady && subMesh.effect._wasPreviouslyUsingInstances === useInstances) {
+            if (drawWrapper._wasPreviouslyReady && drawWrapper._wasPreviouslyUsingInstances === useInstances) {
                 return true;
             }
         }
@@ -1139,7 +1142,7 @@ export class MToonMaterial extends PushMaterial {
         );
 
         // Values that need to be evaluated on every frame
-        MaterialHelper.PrepareDefinesForFrameBoundValues(scene, engine, defines, useInstances, null, subMesh.getRenderingMesh().hasThinInstances);
+        MaterialHelper.PrepareDefinesForFrameBoundValues(scene, engine, this, defines, useInstances, null, subMesh.getRenderingMesh().hasThinInstances);
 
         // External config
         this._eventInfo.defines = defines;
@@ -1151,6 +1154,9 @@ export class MToonMaterial extends PushMaterial {
 
         // External config
         this._callbackPluginEventPrepareDefines(this._eventInfo);
+
+        // Get correct effect
+        let forceWasNotReadyPreviously = false;
 
         // Get correct effect
         if (defines.isDirty) {
@@ -1385,6 +1391,8 @@ export class MToonMaterial extends PushMaterial {
                     effect = previousEffect;
                     defines.markAsUnprocessed();
 
+                    forceWasNotReadyPreviously = this.isFrozen;
+
                     if (lightDisposed) {
                         // re register in case it takes more than one frame.
                         defines._areLightsDisposed = true;
@@ -1402,8 +1410,10 @@ export class MToonMaterial extends PushMaterial {
         }
 
         defines._renderId = scene.getRenderId();
-        subMesh.effect._wasPreviouslyReady = true;
-        subMesh.effect._wasPreviouslyUsingInstances = useInstances;
+        drawWrapper._wasPreviouslyReady = forceWasNotReadyPreviously ? false : true;
+        drawWrapper._wasPreviouslyUsingInstances = useInstances;
+
+        this._checkScenePerformancePriority();
 
         return true;
     }
@@ -1515,7 +1525,7 @@ export class MToonMaterial extends PushMaterial {
             this.bindOnlyNormalMatrix(this._normalMatrix);
         }
 
-        const mustRebind = this._mustRebind(scene, effect, mesh.visibility);
+        const mustRebind = this._mustRebind(scene, effect, subMesh, mesh.visibility);
 
         // Bones
         MaterialHelper.BindBonesParameters(mesh, effect);
@@ -1593,7 +1603,7 @@ export class MToonMaterial extends PushMaterial {
             this._callbackPluginEventBindForSubMesh(this._eventInfo);
 
             // Clip plane
-            MaterialHelper.BindClipPlane(effect, scene);
+            bindClipPlane(effect, this, scene);
 
             // Colors
             this.bindEyePosition(effect);

@@ -12,7 +12,6 @@
 #endif
 
 // Constants
-#define RECIPROCAL_PI2 0.15915494
 #define PI_2 6.28318530718
 #define EPS_COL 0.00001
 
