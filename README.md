@@ -10,6 +10,16 @@ Some settings will be ignored or generates inconsistent lighting.
 
 [About MToon](https://vrm.dev/en/univrm/shaders/shader_mtoon)([ja](https://vrm.dev/univrm/shaders/shader_mtoon)
 
+
+## Fork description
+
+(en): For bump babylon.js 6.43.0.
+Not support VRM1.0 material. Fallback default VRM0.0 material.
+
+(ja): babylon.js 6.43.0 で動作するようにしました。
+VRM1.0 には非対応です。VRM0.0 のデフォルト材質設定にフォールバックされます。
+
+
 ## Supported version table
 
 |babylon.js version|babylon-mtoon-material version|
