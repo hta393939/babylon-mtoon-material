@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { MaterialDefines } from '@babylonjs/core/Materials/materialDefines';
-import type { IImageProcessingConfigurationDefines } from '@babylonjs/core/Materials/imageProcessingConfiguration';
+import type { IImageProcessingConfigurationDefines } from '@babylonjs/core/Materials/imageProcessingConfiguration.defines';
 
 /**
  * Material Defines

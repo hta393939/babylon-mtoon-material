@@ -1,4 +1,5 @@
-import { serialize, SerializationHelper, serializeAsColor3, expandToProperty, serializeAsTexture } from '@babylonjs/core/Misc/decorators';
+import { serialize, serializeAsColor3, expandToProperty, serializeAsTexture } from '@babylonjs/core/Misc/decorators';
+import { SerializationHelper } from '@babylonjs/core/Misc/decorators.serialization';
 import type { Observer } from '@babylonjs/core/Misc/observable';
 import { SmartArray } from '@babylonjs/core/Misc/smartArray';
 import type { IAnimatable } from '@babylonjs/core/Animations/animatable.interface';
