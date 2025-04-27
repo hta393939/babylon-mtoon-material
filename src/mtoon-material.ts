@@ -949,17 +949,17 @@ export class MToonMaterial extends PushMaterial {
     }
 
     /**
-     * {@inheritdoc}
+     * Specifies whether or not this material should be rendered in alpha test mode.
+     * @returns a boolean specifying if an alpha test is needed.
+     *
+     * @see https://github.com/BabylonJS/Babylon.js/blob/master/packages/dev/core/src/Materials/material.ts#L1190
      */
     public needAlphaTesting(): boolean {
-        if (this._forceAlphaTest) {
-            return true;
-        }
-        if (this._alphaTest) {
-            return true;
+        if (this._hasTransparencyMode) {
+            return this._transparencyModeIsTest;
         }
 
-        return this._hasAlphaChannel() && (this._transparencyMode == null || this._transparencyMode === Material.MATERIAL_ALPHATEST);
+        return false;
     }
 
     /**
@@ -1138,7 +1138,7 @@ export class MToonMaterial extends PushMaterial {
             this._useLogarithmicDepth,
             this.pointsCloud,
             this.fogEnabled,
-            this._shouldTurnAlphaTestOn(mesh) || this._forceAlphaTest,
+            (!this.needAlphaBlendingForMesh(mesh) || this.needAlphaTesting()),
             defines
         );
 

@@ -158,7 +158,7 @@ export class MToonMaterialDefines extends MaterialDefines implements IImageProce
     public VIGNETTE = false;
     public VIGNETTEBLENDMODEMULTIPLY = false;
     public VIGNETTEBLENDMODEOPAQUE = false;
-    public TONEMAPPING = false;
+    public TONEMAPPING = 0;
     public TONEMAPPING_ACES = false;
     public CONTRAST = false;
     public COLORCURVES = false;
