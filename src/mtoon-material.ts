@@ -47,7 +47,7 @@ import BumpFragment from './shaders/bump-fragment.frag';
 import LightFragment from './shaders/light-fragment.frag';
 import VertexShader from './shaders/mtoon.vert';
 import FragmentShader from './shaders/mtoon.frag';
-import { bindClipPlane } from '@babylonjs/core';
+import { BindClipPlane } from '@babylonjs/core';
 
 /**
  * Debug shading mode
@@ -1604,7 +1604,7 @@ export class MToonMaterial extends PushMaterial {
             this._callbackPluginEventBindForSubMesh(this._eventInfo);
 
             // Clip plane
-            bindClipPlane(effect, this, scene);
+            BindClipPlane(effect, this, scene);
 
             // Colors
             this.bindEyePosition(effect);
