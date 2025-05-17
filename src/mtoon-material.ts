@@ -784,25 +784,25 @@ export class MToonMaterial extends PushMaterial {
     public get cullMode() {
         return this._cullMode;
     }
+    /** NOTE: v7.10.3 からカリング目的で sideOrientation をいじらない方針になっている */
     public set cullMode(value: CullMode) {
         this._cullMode = value;
         switch (this._cullMode) {
             case CullMode.Off:
                 // 両面を描画する
                 this.backFaceCulling = false;
-                this.sideOrientation = Material.ClockWiseSideOrientation;
-                this.twoSidedLighting = false;
+                this.twoSidedLighting = false; // 法線反転しない
                 break;
             case CullMode.Front:
                 // 表面を描画しない(=裏面だけ描画する)
                 this.backFaceCulling = true;
-                this.sideOrientation = Material.CounterClockWiseSideOrientation;
+                this.cullBackFaces = false;
                 this.twoSidedLighting = true;
                 break;
             case CullMode.Back:
                 // 裏面を描画しない(=表面だけ描画する) デフォルト
                 this.backFaceCulling = true;
-                this.sideOrientation = Material.ClockWiseSideOrientation;
+                this.cullBackFaces = true;
                 this.twoSidedLighting = false;
                 break;
         }
