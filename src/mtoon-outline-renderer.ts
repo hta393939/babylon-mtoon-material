@@ -10,6 +10,9 @@ import type { Matrix } from '@babylonjs/core/Maths/math';
 import type { MToonMaterial } from './mtoon-material';
 import type { Material } from '@babylonjs/core/Materials/material';
 
+// NOTE: @see https://github.com/BabylonJS/Babylon.js/commit/2c9a0f628f48be4babd535976c14839c99f97524#diff-e01fb744473c9ec365ecdb624a1e957fed531d4e8401bb5dd2b8b1c635fbceee
+// public isReady()無い
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const BASE_NAME = 'MToonOutline';
 
@@ -38,7 +41,7 @@ export class MToonOutlineRenderer implements ISceneComponent {
         this.scene._addComponent(this);
         this._engine = this.scene.getEngine();
         this._passIdForDrawWrapper = [];
-        for (let i = 0; i < 1; ++i) {
+        for (let i = 0; i < 1; ++i) { // NOTE: 4?
             this._passIdForDrawWrapper[i] = this._engine.createRenderPassId(`Outline Renderer (${i})`);
         }
     }

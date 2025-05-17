@@ -123,6 +123,8 @@ export class MToonMaterialDefines extends MaterialDefines implements IImageProce
     public TWOSIDEDLIGHTING = false;
     public SHADOWFLOAT = false;
     public MORPHTARGETS = false;
+    /** Morph target position */
+    public MORPHTARGETS_POSITION = false; // NOTE: v7.41.1
     public MORPHTARGETS_NORMAL = false;
     public MORPHTARGETS_TANGENT = false;
     public MORPHTARGETS_UV = false;
